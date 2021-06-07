@@ -14,7 +14,7 @@ function getRepos()
 
     if (input.value == "") { // If Value Is Empty
         // console.log('Value Cant Be Empty')
-        reposData.innerHTML = "<span>Please Write GitHub Username</span>"
+        reposData.innerHTML = "Please Write GitHub Username"
 
     }
     else {
@@ -25,82 +25,93 @@ function getRepos()
         .then((response) => response.json())
 
         .then((data) => {
-            console.log(data)
 
-            reposData.innerHTML = '';
+            if (data.message) {
+                document.querySelector(".show-data").innerHTML = `
+                <h3>Profile Not Found</h3>
+                `
+            }
+            else {
 
-            //Loop On Data
-            data.forEach(repo => {
-                // console.log(repo.name)
+                console.log(data)
 
+                reposData.innerHTML = '';
 
-                //Img De Profil
-                document.querySelector(".img").innerHTML = `
-                <a target="_blank" href="https://github.com/${input.value}"><img src="${repo.owner.avatar_url}" alt="img-github" width=250></a>
-                `;
-              
-
-                //Create The Main Div Element
-                let mainDiv = document.createElement("div");
-
-                //Create Repo Name Text
-                let repoName = document.createTextNode(repo.name);
-
-                //Append The Text To Main Div
-                mainDiv.appendChild(repoName);
+                //Loop On Data
+                data.forEach(repo => {
+                    // console.log(repo.name)
 
 
+                    //Img De Profil
+                    document.querySelector(".img").innerHTML = `
+                    <a target="_blank" href="https://github.com/${input.value}"><img src="${repo.owner.avatar_url}" alt="img-github" width=250></a>
+                    <h1>${repo.owner.login}</h1>
+                    `;
                 
-                //Create Repo URL Anchor
-                let theUrl = document.createElement('a');
 
-                //Create Repo URL Text
-                let theUrlText = document.createTextNode('lien');
+                    //Create The Main Div Element
+                    let mainDiv = document.createElement("div");
 
-                //Append the Repo Url Text To Anchor Tag
-                theUrl.appendChild(theUrlText);
+                    //Create Repo Name Text
+                    let repoName = document.createTextNode(repo.name);
 
-                //Add The Hypertext Reference "href"
-                theUrl.href = `https://github.com/${input.value}/${repo.name}`;
-
-                //Set Attribute Blank 
-                theUrl.setAttribute('target', '_blank');
-
-                //Append URL Anocher To Main Div 
-                mainDiv.appendChild(theUrl);
+                    //Append The Text To Main Div
+                    mainDiv.appendChild(repoName);
 
 
+                    
+                    //Create Repo URL Anchor
+                    let theUrl = document.createElement('a');
 
+                    //Create Repo URL Text
+                    let theUrlText = document.createTextNode('lien');
 
-                //Create Stars Count Span
-                let starSpan = document.createElement("span");
+                    //Append the Repo Url Text To Anchor Tag
+                    theUrl.appendChild(theUrlText);
 
-                //Create The Stars Count Text 
-                let starText = document.createTextNode(`Stars ${repo.stargazers_count}`);
+                    //Add The Hypertext Reference "href"
+                    theUrl.href = `https://github.com/${input.value}/${repo.name}`;
 
-                //Add Stars Count Text To Stars Span
-                starSpan.appendChild(starText);
+                    //Set Attribute Blank 
+                    theUrl.setAttribute('target', '_blank');
 
-                //Append Stars Count Span To Main Div 
-                mainDiv.appendChild(starSpan);
-
-
-
-                //Add Class On Main Div
-                mainDiv.className = 'repo-box';
+                    //Append URL Anocher To Main Div 
+                    mainDiv.appendChild(theUrl);
 
 
 
 
+                    //Create Stars Count Span
+                    let starSpan = document.createElement("span");
 
-                //Append The Main Div To Container
-                reposData.appendChild(mainDiv);
+                    //Create The Stars Count Text 
+                    let starText = document.createTextNode(`Stars ${repo.stargazers_count}`);
 
-            })
+                    //Add Stars Count Text To Stars Span
+                    starSpan.appendChild(starText);
+
+                    //Append Stars Count Span To Main Div 
+                    mainDiv.appendChild(starSpan);
+
+
+
+                    //Add Class On Main Div
+                    mainDiv.className = 'repo-box';
 
 
 
 
+
+                    //Append The Main Div To Container
+                    reposData.appendChild(mainDiv);
+
+                })
+
+            }
+
+
+
+            
 
         })
     }
