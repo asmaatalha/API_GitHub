@@ -34,12 +34,11 @@ function getRepos()
                 // console.log(repo.name)
 
 
-
+                //Img De Profil
+                document.querySelector(".img").innerHTML = `
+                <a target="_blank" href="https://github.com/${input.value}"><img src="${repo.owner.avatar_url}" alt="img-github" width=250></a>
+                `;
               
-
-
-
-
 
                 //Create The Main Div Element
                 let mainDiv = document.createElement("div");
@@ -56,7 +55,7 @@ function getRepos()
                 let theUrl = document.createElement('a');
 
                 //Create Repo URL Text
-                let theUrlText = document.createTextNode('Visit');
+                let theUrlText = document.createTextNode('lien');
 
                 //Append the Repo Url Text To Anchor Tag
                 theUrl.appendChild(theUrlText);
@@ -70,6 +69,9 @@ function getRepos()
                 //Append URL Anocher To Main Div 
                 mainDiv.appendChild(theUrl);
 
+
+
+
                 //Create Stars Count Span
                 let starSpan = document.createElement("span");
 
@@ -81,6 +83,8 @@ function getRepos()
 
                 //Append Stars Count Span To Main Div 
                 mainDiv.appendChild(starSpan);
+
+
 
                 //Add Class On Main Div
                 mainDiv.className = 'repo-box';
